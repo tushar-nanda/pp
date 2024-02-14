@@ -6,7 +6,9 @@ function Header()
         <div>
            <Link to="/">Home</Link>
            <div className="header"><span className="mt-3">sell and Purchanse in you city</span>
-           <Link to="/Login">login</Link>
+           <Link to="/login">login</Link>
+           <br />
+           <Link to="/signup">signup</Link>
            
             </div>
         </div>
