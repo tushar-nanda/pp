@@ -4,6 +4,7 @@ const app = express();
 const port = 4000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 app.use(cors());
@@ -38,14 +39,29 @@ app.post('/signup', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const { username } = req.body;
+
+  const username = req.body.username;
+  const password = req.body.password;
+  
   Users.findOne({ username:username })
-    .then(user => {
-      if (!user) {
+    .then(result => {
+      console.log(result , "user data");
+      if (!result) {
         res.send({ message: "User not found" });
       } else {
-        res.send({ message: "User found" });
-      }
+        if(result.password == password)
+        {
+          const token = jwt.sign({
+            data: result
+          }, 'MYKEY', { expiresIn: '1h'});
+          
+          res.send({ message: "User found with correct password" , token:token });
+        }
+      if(result.password != password) {
+          res.send({ message: "User found without password" });
+
+        }
+      } 
     })
     .catch(err => {
       console.error(err);

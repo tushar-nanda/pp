@@ -1,19 +1,29 @@
 import React from 'react'
 import Header from './Header';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const handleApi = () => {
     const url = "http://localhost:4000/login";
     const data = { username, password };
     console.log({ username, password });
     axios.post(url, data)
       .then((res) => {
-        alert(res.data.message);
+        console.log(res.data.message);
+        if(res.data.message)
+        {
+          alert(res.data.message);
+          if(res.data.token)
+          {
+            localStorage.setItem('token' ,res.data.token);
+            navigate('/');
+            
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
