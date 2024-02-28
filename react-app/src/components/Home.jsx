@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 function Home() {
 
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Home() {
         <div>
         <Header />
             welcome to home
+            <Link to="/add-product">addproduct</Link>
         </div>
     );
 }

@@ -14,6 +14,7 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import AddProducts from "./components/AddProducts";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: (<Signup />),
+  },
+  {
+    path: "/add-product",
+    element: (<AddProducts />),
   },
  
  
