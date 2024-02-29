@@ -6,6 +6,19 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const multer  = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+const upload = multer({ storage: storage })
+
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,6 +32,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/test', {
 .catch(err => console.log('MongoDB connection error:', err));
 
 const Users = mongoose.model('Users', { username: String, password: String });
+const Products = mongoose.model('Products', {pname:String  , pdesc: String , price : String , category : String , pimage : String });
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -67,6 +81,13 @@ app.post('/login', (req, res) => {
       console.error(err);
       res.status(500).send({ message: "Server error" });
     });
+});
+
+app.post('/add-product',upload.single('pimage') ,  (req, res) => {
+  console.log(req.body); 
+  console.log(req.file); 
+
+  return ;
 });
 
 app.listen(port, () => {

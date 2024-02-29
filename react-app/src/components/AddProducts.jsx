@@ -24,10 +24,14 @@ function AddProducts() {
     formData.append('price',price);
     formData.append('category',category);
     formData.append('pimage',pimage);
-    const url = "";
+    const url = "http://localhost:4000/add-product";
     axios.post(url, formData)
-    .then((res)=>{console.log(res)})
-    .catch((err)=>{console.log(err)});
+    .then((res) => {
+      console.log(res.data);
+        })
+    .catch((err) => {
+      console.error(err); 
+    });
   };
   return (
     <div>
