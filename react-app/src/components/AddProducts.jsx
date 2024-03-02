@@ -28,6 +28,8 @@ function AddProducts() {
     axios.post(url, formData)
     .then((res) => {
       console.log(res.data);
+      alert("saved successfully");
+      navigate('/');
         })
     .catch((err) => {
       console.error(err); 
@@ -45,10 +47,11 @@ function AddProducts() {
         <label>Product Price</label>
         <input className="form-control" type="text" value={price} onChange={(e)=>{setprice(e.target.value)}} />
         <label>product Category :</label>
-        <select className="form-control" id="" value={category} onChange={(e)=>{setcategory(e.target.value)}}>
-          <option value="">Bikes</option>
-          <option value="">Mobiles</option>
-          <option value="">Cloth</option>
+        <select className="form-control" value={category} onChange={(e) => setcategory(e.target.value)}>
+          <option value="">Select a category</option>
+          <option value="Bikes">Bikes</option>
+          <option value="Mobiles">Mobiles</option>
+          <option value="Cloth">Cloth</option>
         </select>
         <label>Product Image</label>
         <input className="form-control" type="file"  onChange={(e)=>{setpimage(e.target.files[0])}} />
