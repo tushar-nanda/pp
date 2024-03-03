@@ -1,11 +1,47 @@
 .header
 {
-    height: 50px;
+}
+
+.header-container
+{
+    padding: 10px 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    
 }
 
 .mt-3
 {
     display: inline-block;
     margin-top: 10px;
+}
+
+.search
+{
+    margin-left: 80px;
+    outline: none;
+    padding-left: 10px;
+    width: 200px;
+    height: 35px;
+    border:2px solid #002f34;
+    border-radius: 4px 0px 0px 4px;
+}
+.search-btn{
+    height: 35px;
+    background: #002f34;
+    color: #ffff;
+    border-radius: 0px 4px 4px 0px;
+    outline: none;
+    border: none;
+
+}
+
+.logout-btn
+{
+    height: 35px;
+    background: #002f34;
+    color: #ffff;
+    border-radius: 4px;
+    outline: none;
+    padding: 1px 16px;
+    border: none;
 }
