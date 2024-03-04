@@ -32,7 +32,7 @@
     border-radius: 0px 4px 4px 0px;
     outline: none;
     border: none;
-
+    
 }
 
 .logout-btn
@@ -44,4 +44,20 @@
     outline: none;
     padding: 1px 16px;
     border: none;
+    margin-right: 10px;
+}
+.category
+{
+    color: rgb(0, 47, 52 , 1);
+    padding: 15px;
+    cursor: pointer;
+}
+:hover.category{
+    color: red;
+}
+.cat-contanier
+{
+    padding: 10px 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    
 }

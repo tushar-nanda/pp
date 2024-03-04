@@ -1,0 +1,30 @@
+.icons {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+    color: #eee;
+    cursor: pointer;
+}
+
+.icons:hover {
+    color: red;
+}
+
+.icon-con {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 7px;
+    border-radius: 50%;
+    margin: 7px;
+    background-color: #fff;
+}
+
+.links
+{
+    text-decoration: none;
+    font-size: 24px;
+    color:#002f34;
+    font-weight: bold;
+    margin-left: 20px;
+}
