@@ -38,6 +38,34 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.get('/search', (req, res) => {
+  const search = req.query.search; // Access query parameter correctly\
+  console.log(search);
+  
+  Products.find({
+    $or:[
+      { pname: { $regex: new RegExp(search, 'i') } },
+      { pdesc: { $regex: new RegExp(search, 'i') } },
+      { price: { $regex: new RegExp(search, 'i') } },
+      { category: { $regex: new RegExp(search, 'i') } }
+      // { pname :{$regex : search}},   // video wala comment kar diya hai and maine CGP wla likh diya for case insentive
+      // { pdesc : {$regex : search}},
+      // { price : {$regex : search}},
+      // { category :{$regex : search}}
+    ]
+  })
+  .then((results)=>{
+    res.send({message:'success' , products:results})
+  })
+  .catch((err)=>{
+    res.send({message:'server error'})
+  })
+
+
+
+
+});
+
 app.post('/like-product' ,  (req , res)=>{
  let productId = req.body.productId;
  let userId = req.body.userId;

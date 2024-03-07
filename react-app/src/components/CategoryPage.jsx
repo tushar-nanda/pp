@@ -7,7 +7,7 @@ import { click } from "@testing-library/user-event/dist/click";
 import Categories from "./Categories";
 import { FaHeart } from "react-icons/fa";
 import './Home.css';
-function Home() {
+function CategoryPage() {
 
     const navigate = useNavigate();
     const [products, setproducts] = useState([]);
@@ -163,4 +163,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default CategoryPage;
