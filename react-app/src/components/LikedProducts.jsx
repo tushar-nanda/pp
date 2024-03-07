@@ -7,7 +7,7 @@ import { click } from "@testing-library/user-event/dist/click";
 import Categories from "./Categories";
 import { FaHeart } from "react-icons/fa";
 import './Home.css';
-function Home() {
+function LikedProducts() {
 
     const navigate = useNavigate();
     const [products, setproducts] = useState([]);
@@ -21,8 +21,9 @@ function Home() {
     //     }
     // } , [])
     useEffect(()=>{
-        const url = 'http://localhost:4000/get-products';
-        axios.get(url)
+        const url = 'http://localhost:4000/liked-products';
+        let data = {userId : localStorage.getItem('userId')}
+        axios.post(url , data)
             .then((res)=>{
                 // console.log(res)
                 if(res.data.products)
@@ -70,11 +71,11 @@ function Home() {
 
         const url = 'http://localhost:4000/like-product';
         const data =  {userId , productId};
-
+        alert('added to liked');
         axios.post(url , data)
             .then((res)=>{
                 if(res.data.message)
-                alert('liked');
+                alert('added to liked');
                 
             })
             .catch((err)=>{
@@ -84,9 +85,6 @@ function Home() {
 
 
 
-    }
-    const handleProduct =(id)=>{
-        navigate('/product/'+id);
     }
     
     return (
@@ -102,7 +100,7 @@ function Home() {
                 cproducts.map((item , index)=>{
 
                     return (
-                        <div  onClick={()=>handleProduct(item._id)} key={item._id} className="card m-3">
+                        <div key={item._id} className="card m-3">
                         <div onClick={() => handleLike(item._id)} className="icon-con">
                             <FaHeart className="icons" />
                         </div>
@@ -122,13 +120,13 @@ function Home() {
                 products.map((item , index)=>{
 
                     return (
-                        <div onClick={()=>handleProduct(item._id)} key={item._id} className="card m-3">
+                        <div key={item._id} className="card m-3">
                         <div onClick={() => handleLike(item._id)} className="icon-con">
                             <FaHeart className="icons" />
                         </div>
-                        <img width='300px' height='200px' src={`http://localhost:4000/${item.pimage}`} alt="Product" />
-                            <h3 className="m-2 price-text">Rs. {item.price} /-</h3>
+                        <img width='200px' src={`http://localhost:4000/${item.pimage}`} alt="Product" />
                             <p className="m-2">{item.pname} | {item.category}</p>
+                            <h3 className="m-2 text-success">{item.price}</h3>
                             <p className="m-2 text-success">{item.pdesc}</p>
                         </div>
                     );
@@ -141,4 +139,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default LikedProducts;

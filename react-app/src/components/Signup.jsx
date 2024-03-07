@@ -14,6 +14,7 @@ function Signup() {
     axios.post(url, data)
       .then((res) => {
         console.log(res);
+        alert('successfully registered')
       })
       .catch((err) => {
         console.log(err);

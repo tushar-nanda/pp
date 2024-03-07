@@ -38,8 +38,14 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.post('like-product' ,  (req , res)=>{
-  res.send('asda');
+app.post('/like-product' ,  (req , res)=>{
+ let productId = req.body.productId;
+ let userId = req.body.userId;
+
+
+ Users.updateOne( { _id:userId } , {$addToSet : {likedProducts:productId}} )
+ .then(()=>{res.send({messgae:'success liked'})})
+ .catch(()=>{res.send({message:'server Error'})})
 })
 
 app.post('/signup', (req, res) => {
@@ -73,7 +79,7 @@ app.post('/login', (req, res) => {
           data: result
         }, 'MYKEY', { expiresIn: '1h'});
         
-        res.send({ message: "User found with correct password" , token:token });
+        res.send({ message: "User found with correct password" , token:token , userId:result._id });
       }
       if(result.password != password) {
         res.send({ message: "User found without password" });
@@ -98,6 +104,32 @@ app.get('/get-products' , (req ,res)=>{
       console.error(err);
       res.send({messgae:'server error' });
     });
+});
+
+
+app.get('/get-product/:pId' , (req ,res)=>{
+    console.log(req.params)
+  Products.findOne({ _id : req.params.pId})
+  .then(result => {
+    res.send({message:'success' , product:result });
+  })
+  .catch(err => {
+    console.error(err);
+    res.send({messgae:'server error' });
+  });
+});
+
+app.post('/liked-products' , (req ,res)=>{
+    
+  Users.findOne({ _id : req.body.userId }).populate('likedProducts')
+  .then(result => {
+    // console.log(result , "user data");
+    res.send({message:'success' , products:result.likedProducts });
+  })
+  .catch(err => {
+    console.error(err);
+    res.send({messgae:'server error' });
+  });
 });
 
 
