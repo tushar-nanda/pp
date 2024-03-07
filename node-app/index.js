@@ -121,9 +121,15 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.get('/get-products' , (req ,res)=>{
-    
-    Products.find()
+app.get('/get-products/' , (req ,res)=>{
+    const catName = req.query.catName; 
+    let _f = {};
+
+    if(catName)
+    {
+      _f = {category : catName}
+    }
+    Products.find(_f)
     .then(result => {
       console.log(result , "user data");
       res.send({message:'success' , products:result });
@@ -161,16 +167,43 @@ app.post('/liked-products' , (req ,res)=>{
 });
 
 
-const Products = mongoose.model('Products', {pname:String  , pdesc: String , price : String , category : String , pimage : String });
-app.post('/add-product',upload.single('pimage') ,  (req, res) => {
+const Products = mongoose.model('Products', {
+  pname:String ,
+   pdesc: String ,
+    price : String ,
+     category : String ,
+      pimage : String,
+      pimage2 : String,
+      addedBy: mongoose.Schema.Types.ObjectId 
+
+
+});
+
+app.get('/get-user/:uId' , (req ,res)=>{
+  const _userId = req.params.uId;
+  Users.findOne({_id:_userId})
+  .then((result)=>{
+      res.send({message:'success' , user:result})
+  })
+  .catch(err=>{
+    console.log({message:'no detil found'})
+  })
+})
+
+app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) ,  (req, res) => {
+  console.log(req.files); 
   console.log(req.body); 
-  console.log(req.file); 
+  // return ;
     const pname = req.body.pname;
     const pdesc = req.body.pdesc;
     const price = req.body.price;
     const category = req.body.category;
-    const pimage= req.file.path;
-  const product = new Products({pname , pdesc , price , category , pimage});
+    const pimage= req.files.pimage[0].path;
+    const pimage2= req.files.pimage2[0].path;
+    const addedBy= req.body.userId;
+
+  const product = new Products({pname , pdesc , price , category , pimage , pimage2 ,addedBy});
+
   product.save()
   .then(() => {
     res.send({ message: "Saved user" });

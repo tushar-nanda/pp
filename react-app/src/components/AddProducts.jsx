@@ -3,6 +3,7 @@ import Header from "./Header";
 import { useEffect ,useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import categories from "./CategoriesList";
 function AddProducts() {
   const navigate = useNavigate();
 
@@ -16,6 +17,7 @@ function AddProducts() {
   const [pdesc, setpdesc] = useState("");
   const [price, setprice] = useState("");
   const [pimage, setpimage] = useState("");
+  const [pimage2, setpimage2] = useState("");
   const [category, setcategory] = useState("");
   const handleApi =()=>{
     const formData = new FormData();
@@ -24,6 +26,8 @@ function AddProducts() {
     formData.append('price',price);
     formData.append('category',category);
     formData.append('pimage',pimage);
+    formData.append('pimage2',pimage2);
+    formData.append('userId',localStorage.getItem('userId'));
     const url = "http://localhost:4000/add-product";
     axios.post(url, formData)
     .then((res) => {
@@ -52,9 +56,20 @@ function AddProducts() {
           <option value="Bikes">Bikes</option>
           <option value="Mobiles">Mobiles</option>
           <option value="Cloth">Cloth</option>
+          {
+            categories && categories.length > 0 && 
+            categories.map((item , index)=>{
+              return (
+                  <option key={'option' + index}>{item}</option>
+                   
+              )
+            })
+          }
         </select>
-        <label>Product Image</label>
+        <label>Product first Image</label>
         <input className="form-control" type="file"  onChange={(e)=>{setpimage(e.target.files[0])}} />
+        <label>Product second Image</label>
+        <input className="form-control" type="file"  onChange={(e)=>{setpimage2(e.target.files[0])}} />
         <button onClick={handleApi} className="btn btn-primary mt-3">SUBMIT</button>
       </div>
     </div>
