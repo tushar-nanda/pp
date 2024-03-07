@@ -24,7 +24,7 @@ function Home() {
         const url = 'http://localhost:4000/get-products';
         axios.get(url)
             .then((res)=>{
-                console.log(res)
+                // console.log(res)
                 if(res.data.products)
                 {
                     setproducts(res.data.products);
@@ -32,7 +32,7 @@ function Home() {
                 }
             })
             .catch((err)=>{
-                console.log(err);
+                // console.log(err);
                 alert('server err');
             })
     } , [])
@@ -41,7 +41,7 @@ function Home() {
     }
     const handleClick = ()=>{
         let filteredPorducts= products.filter((item)=>{
-            console.log(item);
+            // console.log(item);
             if( item.pname.toLowerCase().includes(search.toLocaleLowerCase()) ||
                 item.pdesc.toLowerCase().includes(search.toLocaleLowerCase()) ||
                 item.category.toLowerCase().includes(search.toLocaleLowerCase()) )   
@@ -54,7 +54,7 @@ function Home() {
     const handleCategory = (v)=>{
         
         let filteredPorducts= products.filter((item)=>{
-            console.log(item);
+            // console.log(item);
             if( item.category.toLowerCase()== (v.toLocaleLowerCase()) )   
             {
                 return item;
@@ -63,6 +63,11 @@ function Home() {
         setcproducts(filteredPorducts);
 
     }
+
+    const handleLike = (productId) => {
+        console.log('userId:', 'productId:', productId);
+    }
+    
     return (
         <div>
         <Header search={search} handlesearch={handlesearch} handleClick ={handleClick}/>
@@ -77,11 +82,10 @@ function Home() {
 
                     return (
                         <div key={item._id} className="card m-3">
-                        <div className="icon-con">
-
-                        <FaHeart className="icons" />
-
+                        <div onClick={() => handleLike(item._id)} className="icon-con">
+                            <FaHeart className="icons" />
                         </div>
+
                         <img width='200px' src={`http://localhost:4000/${item.pimage}`} alt="Product" />
                             <p className="m-2">{item.pname} | {item.category}</p>
                             <h3 className="m-2 text-success">{item.price}</h3>
@@ -98,10 +102,8 @@ function Home() {
 
                     return (
                         <div key={item._id} className="card m-3">
-                        <div className="icon-con">
-
-                        <FaHeart className="icons" />
-
+                        <div onClick={() => handleLike(item._id)} className="icon-con">
+                            <FaHeart className="icons" />
                         </div>
                         <img width='200px' src={`http://localhost:4000/${item.pimage}`} alt="Product" />
                             <p className="m-2">{item.pname} | {item.category}</p>

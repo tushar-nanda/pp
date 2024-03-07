@@ -32,11 +32,15 @@ mongoose.connect('mongodb://127.0.0.1:27017/test', {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log('MongoDB connection error:', err));
 
-const Users = mongoose.model('Users', { username: String, password: String });
+const Users = mongoose.model('Users', { username: String, password: String  , likedProducts:[{type:mongoose.Schema.Types.ObjectId , ref:'Products'}]});
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+app.post('like-product' ,  (req , res)=>{
+  res.send('asda');
+})
 
 app.post('/signup', (req, res) => {
   console.log(req.body);
