@@ -34,16 +34,18 @@ function Login() {
   return (
     <div>
       <Header />
-      welcome to signup page
-      <br />
-      UserName
-      <input type="text" value={username} onChange={(e) => { setUsername(e.target.value) }} />
-      <br />
-      password
-      <input type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
-      <br />
-      <button onClick={handleApi}>login</button>
-      <Link to="/signup">signup</Link>
+        <div className='p-3 m-3'>
+          <h2>welcome to Login page </h2>
+        <br />
+        UserName
+        <input className="form-control" type="text" value={username} onChange={(e) => { setUsername(e.target.value) }} />
+        <br />
+        password
+        <input className="form-control" type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+        <br />
+        <button className="btn btn-primary m-3"onClick={handleApi}>login</button>
+        <Link to="/signup" className='btn btn-success'>Jump to signup</Link>
+      </div>
     </div>
   );
 }

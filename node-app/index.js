@@ -32,7 +32,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/test', {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log('MongoDB connection error:', err));
 
-const Users = mongoose.model('Users', { username: String, password: String  , likedProducts:[{type:mongoose.Schema.Types.ObjectId , ref:'Products'}]});
+const Users = mongoose.model('Users', {
+  username: String,
+  email: String,
+  mobile: String,
+  password: String,
+  likedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }]
+});
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -78,8 +84,9 @@ app.post('/like-product' ,  (req , res)=>{
 
 app.post('/signup', (req, res) => {
   console.log(req.body);
-  const { username, password } = req.body;
-  const user = new Users({ username, password });
+  const { username, password ,email , mobile } = req.body;
+
+  const user = new Users({ username, password ,email , mobile });
   user.save()
   .then(() => {
     res.send({ message: "Saved user" });
@@ -168,8 +175,8 @@ app.post('/liked-products' , (req ,res)=>{
 
 
 const Products = mongoose.model('Products', {
-  pname:String ,
-   pdesc: String ,
+    pname:String ,
+    pdesc: String ,
     price : String ,
      category : String ,
       pimage : String,
@@ -183,10 +190,14 @@ app.get('/get-user/:uId' , (req ,res)=>{
   const _userId = req.params.uId;
   Users.findOne({_id:_userId})
   .then((result)=>{
-      res.send({message:'success' , user:result})
+      res.send({message:'success' , user:{
+        email: result.email,
+        mobile: result.mobile, 
+        username:result.username,
+      }})
   })
   .catch(err=>{
-    console.log({message:'no detil found'})
+    console.log({message:'no detail found'})
   })
 })
 

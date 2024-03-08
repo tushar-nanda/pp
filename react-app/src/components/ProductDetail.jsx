@@ -29,7 +29,7 @@ function ProductDetail() {
         axios.get(url)
             .then((res)=>{
                console.log(res)
-               if(res.data.user)
+            //    if(res.data.user)
                setuser(res.data.user)
             })
             .catch((err)=>{
@@ -46,7 +46,7 @@ function ProductDetail() {
                 <div className='d-flex justify-content-between flex-wrap'>
                         <div>
                             <img width="400px" height='200px' src={'http://localhost:4000/' + product.pimage} alt="" />
-                            <img width="400px" height='200px' src={'http://localhost:4000/' + product.pimage2} alt="" />
+                           { product.pimage2 &&  <img width="400px" height='200px' src={'http://localhost:4000/' + product.pimage2} alt="" />}
                             <h6>Products Description</h6>
                             {product.pdesc}
                         </div>
@@ -58,6 +58,8 @@ function ProductDetail() {
 
                         {product.addedBy && <button onClick={()=>handeleContact(product.addedBy)}>Show Contact Details</button>}
                         { user && user.username && <h4>{user.username}</h4>}
+                        { user && user.email && <h4>{user.email}</h4>}
+                        { user && user.mobile && <h4>{user.mobile}</h4>}
                         </div>
                 </div>
             }
