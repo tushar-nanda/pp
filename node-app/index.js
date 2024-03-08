@@ -46,8 +46,10 @@ app.get('/', (req, res) => {
 
 app.get('/search', (req, res) => {
   const search = req.query.search; // Access query parameter correctly\
-  console.log(search);
-  
+  let latitude = req.query.loc.split(',')[0].trim();
+let longitude = req.query.loc.split(',')[1].trim();
+
+
   Products.find({
     $or:[
       { pname: { $regex: new RegExp(search, 'i') } },
@@ -58,7 +60,16 @@ app.get('/search', (req, res) => {
       // { pdesc : {$regex : search}},
       // { price : {$regex : search}},
       // { category :{$regex : search}}
-    ]
+    ],
+    ploc:{
+      $near :{
+        $geometry :{
+          type : 'Point' , 
+          coordinates : [parseFloat(latitude),parseFloat(longitude)]
+        },
+        $maxDistance :500 * 10000 ,
+      }
+    }
   })
   .then((results)=>{
     res.send({message:'success' , products:results})
@@ -173,18 +184,29 @@ app.post('/liked-products' , (req ,res)=>{
   });
 });
 
+let schema = new mongoose.Schema({
+  pname:String ,
+  pdesc: String ,
+  price : String ,
+   category : String ,
+    pimage : String,
+    pimage2 : String,
+    addedBy: mongoose.Schema.Types.ObjectId,
+    pLoc:{
+      type :{
+        type : String,
+        enum : ['Point'],
+        default: 'Point'
+      },
+      coordinates :{
+        type : [Number]
+      }
+    }
+})
 
-const Products = mongoose.model('Products', {
-    pname:String ,
-    pdesc: String ,
-    price : String ,
-     category : String ,
-      pimage : String,
-      pimage2 : String,
-      addedBy: mongoose.Schema.Types.ObjectId 
+schema.index({pLoc : '2dsphere'});
 
-
-});
+const Products = mongoose.model('Products',schema );
 
 app.get('/get-user/:uId' , (req ,res)=>{
   const _userId = req.params.uId;
@@ -204,7 +226,10 @@ app.get('/get-user/:uId' , (req ,res)=>{
 app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) ,  (req, res) => {
   console.log(req.files); 
   console.log(req.body); 
-  return ;
+  // return ;
+  const plat = parseFloat(req.body.plat); 
+  const plong = parseFloat(req.body.plong);    // some correction is done here
+  //  console.log(plat , plong);
     const pname = req.body.pname;
     const pdesc = req.body.pdesc;
     const price = req.body.price;
@@ -212,10 +237,16 @@ app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) , 
     const pimage= req.files.pimage[0].path;
     const pimage2= req.files.pimage2[0].path;
     const addedBy= req.body.userId;
+    // res.send("sadas");
 
 
     
-  const product = new Products({pname , pdesc , price , category , pimage , pimage2 ,addedBy});
+  const product = new Products({pname , pdesc , price , category , pimage , pimage2 ,addedBy , pLoc :{
+    type : 'Point' , coordinates : [plat,plong]
+  }
+     
+  
+  });
 
   product.save()
   .then(() => {
