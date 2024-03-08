@@ -204,7 +204,7 @@ app.get('/get-user/:uId' , (req ,res)=>{
 app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) ,  (req, res) => {
   console.log(req.files); 
   console.log(req.body); 
-  // return ;
+  return ;
     const pname = req.body.pname;
     const pdesc = req.body.pdesc;
     const price = req.body.price;
@@ -213,6 +213,8 @@ app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) , 
     const pimage2= req.files.pimage2[0].path;
     const addedBy= req.body.userId;
 
+
+    
   const product = new Products({pname , pdesc , price , category , pimage , pimage2 ,addedBy});
 
   product.save()

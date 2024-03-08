@@ -9,10 +9,29 @@ function Header(props)
         localStorage.removeItem('token');
         navigate('/login');
     }
+    let locations =[
+        {
+          "latitude":28.6139 , 
+          "longitude":77.2090,
+          "placeName":"New Delhi , Delhi"
+        } ,
+         {
+          "latitude": 19.0760 , 
+          "longitude":72.8777,
+          "placeName":"Mumbai , Maharastra"
+        },
+      ]
     return (
         <div className="header-container d-flex justify-content-between">
         <div className="header">
-           <Link  className='links' to="/">Home</Link>
+           <Link  className='links m-3' to="/">Home</Link>
+           <select onChange={(e)=>{
+                localStorage.setItem('userLoc' , e.target.value)
+           }}  value="" >
+                { locations.map((item , index)=>{
+                    return ( <option value={`${item.latitude} , ${item.longitude}`} key={index}>{item.placeName}</option> )
+                }) }
+           </select>
            <input type="text" className="search" value={props && props.search}
             onChange={(e)=>props.handlesearch && props.handlesearch(e.target.value)}
            />
