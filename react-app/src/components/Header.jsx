@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 function Header(props)
 {
-    const [loc, setloc] = useState("");
-    const navigate = useNavigate();
+  const [loc, setLoc] = useState(null)
+  const navigate = useNavigate();
     const [showOver, setshowOver] = useState(false)
     const handleLogout = ()=>{
         localStorage.removeItem('token');
@@ -33,13 +33,20 @@ function Header(props)
         <div className="header-container d-flex justify-content-between">
         <div className="header">
            <Link  className='links m-3' to="/">Home</Link>
-           <select onChange={(e)=>{
-                localStorage.setItem('userLoc' , e.target.value)
-           }}  value={loc} >
-                { locations.map((item , index)=>{
-                    return ( <option value={`${item.latitude} , ${item.longitude}`} key={index}>{item.placeName}</option> )
-                }) }
-           </select>
+           <select value={loc} onChange={(e) => {
+                    localStorage.setItem('userLoc', e.target.value)
+                    setLoc(e.target.value)
+                }} >
+                    {
+                        locations.map((item, index) => {
+                            return (
+                                <option value={`${item.latitude},${item.longitude}`} >
+                                    {item.placeName}
+                                </option>
+                            )
+                        })
+                    }
+                </select>
            <input type="text" className="search" value={props && props.search}
             onChange={(e)=>props.handlesearch && props.handlesearch(e.target.value)}
            />
@@ -90,8 +97,10 @@ function Header(props)
              
            }}>
                  <div>
-                 {!!localStorage.getItem('token') &&  <Link to="/liked-products"><button className="logout-btn">Liked Products</button></Link> }
+                 {!!localStorage.getItem('token') &&  <Link to="/liked-products"><button className="logout-btn">Favourites </button></Link> }
                  </div>
+
+                 <div>  {!!localStorage.getItem('token') &&  <Link to="/my-products"><button className="logout-btn">My Produts </button></Link> }</div>
 
                  <div>  {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="logout-btn">addproduct </button></Link> }</div>
 

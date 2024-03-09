@@ -184,6 +184,19 @@ app.post('/liked-products' , (req ,res)=>{
   });
 });
 
+app.post('/my-products' , (req ,res)=>{
+    const userId = req.body.userId;
+  Products.find({addedBy : userId})
+  .then(result => {
+    // console.log(result , "user data");
+    res.send({message:'success' , products:result });
+  })
+  .catch(err => {
+    console.error(err);
+    res.send({messgae:'server error' });
+  });
+});
+
 let schema = new mongoose.Schema({
   pname:String ,
   pdesc: String ,
