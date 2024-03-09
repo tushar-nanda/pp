@@ -9,7 +9,7 @@ function Categories(props) {
   return (
     <div className='cat-container'>
       <div>
-        <span className='pr-3 category' onClick={() => props.handleCategory && props.handleCategory(null)}>All Categories</span>
+        <span className='pr-3 category' onClick={() => navigate('/') && props.handleCategory && props.handleCategory(null)}>All Categories</span>
         {categories && categories.length > 0 && categories.map((item, index) => {
           return (
             <span key={index} onClick={() => navigate('/category/' + item)} className='category'>{item}</span>
