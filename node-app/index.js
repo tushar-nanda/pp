@@ -184,6 +184,11 @@ app.post('/liked-products' , (req ,res)=>{
   });
 });
 
+app.get('/my-profile/:userId' , (req ,res)=>{
+    console.log(req.params);
+    return ;
+})
+
 app.post('/my-products' , (req ,res)=>{
     const userId = req.body.userId;
   Products.find({addedBy : userId})
