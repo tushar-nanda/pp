@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './Header';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';  
+import API_URL from '../constants';
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -10,7 +11,7 @@ function Signup() {
   const [mobile, setmobile] = useState("")
   const navigate = useNavigate();
   const handleApi = () => {
-    const url = "http://localhost:4000/signup";
+    const url = API_URL + "/signup";
     const data = { username, password ,mobile , email};
     console.log({ username, password ,mobile , email});
     axios.post(url, data)

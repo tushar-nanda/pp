@@ -3,12 +3,13 @@ import Header from './Header';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import API_URL from '../constants';
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const handleApi = () => {
-    const url = "http://localhost:4000/login";
+    const url = API_URL + "/login";
     const data = { username, password };
     console.log({ username, password });
     axios.post(url, data)
