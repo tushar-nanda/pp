@@ -184,6 +184,20 @@ app.post('/liked-products' , (req ,res)=>{
   });
 });
 
+app.post('/my-products' , (req ,res)=>{
+  
+  const userId = req.body.userId;
+  Products.find({addedBy : userId})
+  .then(result => {
+    // console.log(result , "user data");
+    res.send({message:'success' , products:result});
+  })
+  .catch(err => {
+    console.error(err);
+    res.send({messgae:'server error' });
+  });
+});
+
 let schema = new mongoose.Schema({
   pname:String ,
   pdesc: String ,
@@ -221,6 +235,24 @@ app.get('/get-user/:uId' , (req ,res)=>{
   .catch(err=>{
     console.log({message:'no detail found'})
   })
+})
+
+
+app.get('/my-profile/:userId' , (req , res)=>{
+    let uid = req.params.userId;
+
+    Users.findOne({_id:uid})
+    .then((result)=>{
+        res.send({message:'success' , user:{
+          email: result.email,
+          mobile: result.mobile, 
+          username:result.username,
+        }})
+    })
+    .catch(err=>{
+      console.log({message:'no detail found'})
+    })
+    return ;
 })
 
 app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) ,  (req, res) => {

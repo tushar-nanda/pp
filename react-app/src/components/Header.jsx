@@ -90,10 +90,14 @@ function Header(props)
              
            }}>
                  <div>
-                 {!!localStorage.getItem('token') &&  <Link to="/liked-products"><button className="logout-btn">Liked Products</button></Link> }
+                 {!!localStorage.getItem('token') &&  <Link to="/liked-products"><button className="logout-btn">FAVOURITES</button></Link> }
                  </div>
 
                  <div>  {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="logout-btn">addproduct </button></Link> }</div>
+
+                 <div>
+                 {!!localStorage.getItem('token') &&  <Link to="/my-products"><button className="logout-btn">My ADs</button></Link> }
+                 </div>
 
                  <div>{!localStorage.getItem('token')?<Link to="/login">login</Link>:<button className="logout-btn" onClick={handleLogout}>logout</button>}</div>
            </div>}
