@@ -61,7 +61,7 @@ let longitude = req.query.loc.split(',')[1].trim();
       // { price : {$regex : search}},
       // { category :{$regex : search}}
     ],
-    ploc:{
+    pLoc:{
       $near :{
         $geometry :{
           type : 'Point' , 
