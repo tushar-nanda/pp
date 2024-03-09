@@ -185,7 +185,20 @@ app.post('/liked-products' , (req ,res)=>{
 });
 
 app.get('/my-profile/:userId' , (req ,res)=>{
-    console.log(req.params);
+    
+    let uid = req.params.userId;
+
+    Users.findOne({_id:uid})
+    .then((result)=>{
+        res.send({message:'success' , user:{
+          email: result.email,
+          mobile: result.mobile, 
+          username:result.username,
+        }})
+    })
+    .catch(err=>{
+      console.log({message:'no detail found'})
+    })
     return ;
 })
 
