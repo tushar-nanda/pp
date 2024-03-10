@@ -12,8 +12,10 @@ function Home() {
 
     const navigate = useNavigate();
     const [products, setproducts] = useState([]);
+    const [likedproducts, setlikedproducts] = useState([]);
     const [cproducts, setcproducts] = useState([]);
-    const [issearch, setissearch] = useState(false)
+    const [issearch, setissearch] = useState(false);
+    
     // const [rawproducts, setrawproducts] = useState([]);   //tushar
     const [search, setsearch] = useState("")
     // useEffect(()=>{
@@ -37,7 +39,28 @@ function Home() {
                 // console.log(err);
                 alert('server err');
             })
+
+
+            const url2 = API_URL + '/liked-products';
+            let data = {userId: localStorage.getItem('userId')}
+            axios.post(url2,data)
+            .then((res)=>{
+                // console.log(res)
+                if(res.data.products)
+                {
+                    setlikedproducts(res.data.products);
+                    // setrawproducts(res.data.products);
+                }
+            })
+            .catch((err)=>{
+                // console.log(err);
+                alert('server err');
+            })
     } , [])
+
+    
+
+
     const handlesearch = (value)=>{
         setsearch(value);
     }
@@ -100,7 +123,9 @@ function Home() {
         axios.post(url , data)
             .then((res)=>{
                 if(res.data.message)
-                alert('liked');
+               { alert('liked');
+
+                }
                 
             })
             .catch((err)=>{
@@ -154,7 +179,12 @@ function Home() {
                     return (
                         <div onClick={()=>handleProduct(item._id)} key={item._id} className="card m-3">
                         <div onClick={(e) => handleLike(item._id,e)} className="icon-con">
+                        {
+                            likedproducts.find((likedItem)=>likedItem._id == item._id)?
+                            <FaHeart className="red-icons" />:
                             <FaHeart className="icons" />
+
+                        }
                         </div>
                         <img width='300px' height='200px' src={API_URL + '/'+item.pimage} alt="Product" />
                             <h3 className="m-2 price-text">Rs. {item.price} /-</h3>
