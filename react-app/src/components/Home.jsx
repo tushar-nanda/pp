@@ -13,6 +13,7 @@ function Home() {
     const navigate = useNavigate();
     const [products, setproducts] = useState([]);
     const [likedproducts, setlikedproducts] = useState([]);
+    const [refresh, setrefresh] = useState(false);
     const [cproducts, setcproducts] = useState([]);
     const [issearch, setissearch] = useState(false);
     
@@ -56,7 +57,7 @@ function Home() {
                 // console.log(err);
                 alert('server err');
             })
-    } , [])
+    } , [refresh]);
 
     
 
@@ -123,8 +124,10 @@ function Home() {
         axios.post(url , data)
             .then((res)=>{
                 if(res.data.message)
-               { alert('liked');
-
+                { 
+                    alert('liked');
+                    setrefresh(!refresh);
+                    
                 }
                 
             })
@@ -132,10 +135,40 @@ function Home() {
                 // console.log(err);
                 alert('server err');
             })
-
-
-
     }
+
+    const handleDisLike = (productId ,e) => {
+        e.stopPropagation();
+        let userId = localStorage.getItem('userId');
+
+        if(!userId)
+        {
+            alert('please login first.')
+            return;
+        }
+        console.log('userId:', 'productId:', productId , userId);
+        alert('added to liked')
+        const url = API_URL + '/dislike-product';
+        const data =  {userId , productId};
+
+        axios.post(url , data)
+            .then((res)=>{
+                if(res.data.message)
+                { 
+                    alert('liked');
+                    setrefresh(!refresh);
+                    
+                }
+                
+            })
+            .catch((err)=>{
+                // console.log(err);
+                alert('server err');
+            })
+    }
+
+
+
     const handleProduct =(id)=>{
         navigate('/product/'+id);
     }
@@ -178,11 +211,11 @@ function Home() {
 
                     return (
                         <div onClick={()=>handleProduct(item._id)} key={item._id} className="card m-3">
-                        <div onClick={(e) => handleLike(item._id,e)} className="icon-con">
+                        <div className="icon-con">
                         {
                             likedproducts.find((likedItem)=>likedItem._id == item._id)?
-                            <FaHeart className="red-icons" />:
-                            <FaHeart className="icons" />
+                            <FaHeart  onClick={(e) => handleDisLike(item._id,e)}  className="red-icons" />:
+                            <FaHeart  onClick={(e) => handleLike(item._id,e)} className="icons" />
 
                         }
                         </div>
