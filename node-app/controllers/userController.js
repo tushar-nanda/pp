@@ -18,6 +18,15 @@ module.exports.likeProducts = (req , res)=>{
     .then(()=>{res.send({messgae:'success liked'})})
     .catch(()=>{res.send({message:'server Error'})})
 };
+module.exports.dislikeProducts = (req , res)=>{
+    let productId = req.body.productId;
+    let userId = req.body.userId;
+   
+   
+    Users.updateOne( { _id:userId } , {$pull : {likedProducts:productId}} )
+    .then(()=>{res.send({messgae:'removed from liked'})})
+    .catch(()=>{res.send({message:'server Error'})})
+};
 
 module.exports.signup = (req, res) => {
     console.log(req.body);

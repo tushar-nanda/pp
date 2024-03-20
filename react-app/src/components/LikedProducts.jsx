@@ -123,7 +123,7 @@ function LikedProducts() {
                     return (
                         <div key={item._id} className="card m-3">
                         <div onClick={() => handleLike(item._id)} className="icon-con">
-                            <FaHeart className="icons" />
+                            <FaHeart className="red-icons" />
                         </div>
                         <img width='200px' src={API_URL + '/' + item.pimage} alt="Product" />
                             <p className="m-2">{item.pname} | {item.category}</p>

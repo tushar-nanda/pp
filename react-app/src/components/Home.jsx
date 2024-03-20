@@ -147,7 +147,7 @@ function Home() {
             return;
         }
         console.log('userId:', 'productId:', productId , userId);
-        alert('added to liked')
+        alert('removed from liked')
         const url = API_URL + '/dislike-product';
         const data =  {userId , productId};
 

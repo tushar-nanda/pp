@@ -17,6 +17,8 @@ function CategoryPage() {
     const [products, setproducts] = useState([]);
     const [cproducts, setcproducts] = useState([]);
     const [issearch, setissearch] = useState(false)
+    const [likedproducts, setlikedproducts] = useState([]);
+    const [refresh, setrefresh] = useState(false);
     // const [rawproducts, setrawproducts] = useState([]);   //tushar
     const [search, setsearch] = useState("")
     // useEffect(()=>{
@@ -40,7 +42,23 @@ function CategoryPage() {
                 // console.log(err);
                 alert('server err');
             })
-    } , [param])
+
+            const url2 = API_URL + '/liked-products';
+            let data = {userId: localStorage.getItem('userId')}
+            axios.post(url2,data)
+            .then((res)=>{
+                // console.log(res)
+                if(res.data.products)
+                {
+                    setlikedproducts(res.data.products);
+                    // setrawproducts(res.data.products);
+                }
+            })
+            .catch((err)=>{
+                // console.log(err);
+                alert('server err');
+            })
+    } , [param , refresh])
     const handlesearch = (value)=>{
         setsearch(value);
     }
@@ -87,27 +105,60 @@ function CategoryPage() {
 
     }
 
-    const handleLike = (productId) => {
+    const handleLike = (productId , e) => {
+        e.stopPropagation();
         let userId = localStorage.getItem('userId');
         console.log('userId:', 'productId:', productId , userId);
 
         const url = API_URL + '/like-product';
         const data =  {userId , productId};
-
+        alert('added to liked products')
         axios.post(url , data)
             .then((res)=>{
                 if(res.data.message)
-                alert('liked');
+                {
+                    setrefresh(!refresh);
+                    alert('liked');
+                }
+
                 
             })
             .catch((err)=>{
                 // console.log(err);
                 alert('server err');
             })
-
-
-
     }
+
+    const handleDisLike = (productId ,e) => {
+        e.stopPropagation();
+        let userId = localStorage.getItem('userId');
+
+        if(!userId)
+        {
+            alert('please login first.')
+            return;
+        }
+        console.log('userId:', 'productId:', productId , userId);
+        alert('removed from liked')
+        const url = API_URL + '/dislike-product';
+        const data =  {userId , productId};
+
+        axios.post(url , data)
+            .then((res)=>{
+                if(res.data.message)
+                { 
+                    alert('liked');
+                    setrefresh(!refresh);
+                    
+                }
+                
+            })
+            .catch((err)=>{
+                // console.log(err);
+                alert('server err');
+            })
+    }
+
     const handleProduct =(id)=>{
         navigate('/product/'+id);
     }
@@ -151,8 +202,13 @@ function CategoryPage() {
 
                     return (
                         <div onClick={()=>handleProduct(item._id)} key={item._id} className="card m-3">
-                        <div onClick={() => handleLike(item._id)} className="icon-con">
-                            <FaHeart className="icons" />
+                        <div  className="icon-con">
+                        {
+                            likedproducts.find((likedItem)=>likedItem._id == item._id)?
+                            <FaHeart  onClick={(e) => handleDisLike(item._id,e)}  className="red-icons" />:
+                            <FaHeart  onClick={(e) => handleLike(item._id,e)} className="icons" />
+
+                        }
                         </div>
                         <img width='300px' height='200px' src={API_URL+'/' + item.pimage} alt="Product" />
                             <h3 className="m-2 price-text">Rs. {item.price} /-</h3>

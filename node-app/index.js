@@ -45,6 +45,7 @@ app.get('/', (req, res) => {
 app.get('/search',productController.search);
 
 app.post('/like-product' , userController.likeProducts );
+app.post('/dislike-product' , userController.dislikeProducts );
 
 app.post('/signup', userController.signup);
 
