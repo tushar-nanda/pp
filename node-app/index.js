@@ -51,6 +51,8 @@ app.post('/signup', userController.signup);
 
 app.post('/login',userController.login);
 
+app.post('/delete-product',productController.deleteProduct);
+
 app.get('/get-products/' ,productController.getProducts);
 
 app.get('/get-product/:pId' , productController.getProductsById);

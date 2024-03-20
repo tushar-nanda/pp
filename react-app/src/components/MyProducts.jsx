@@ -87,6 +87,31 @@ function MyProducts() {
 
 
     }
+    const handleDel = (pid)=>{
+        
+
+        if(!localStorage.getItem('userId'))
+        {
+            alert('please login first');
+            return ;
+        }
+        const url = API_URL + '/delete-product';
+        const data = {
+            pid ,
+            userId: localStorage.getItem('userId'),
+        }
+
+        axios.post(url , data)
+        .then((res)=>{
+            if(res.data.message)
+            alert('Deleted');
+            
+        })
+        .catch((err)=>{
+            // console.log(err);
+            alert('server err');
+        })
+    }
     
     return (
         <div>
@@ -104,10 +129,10 @@ function MyProducts() {
                         <div key={item._id} className="card m-3">
                         <div onClick={() => handleLike(item._id)} className="icon-con">
                             <FaHeart className="icons" />
+                            <p className="m-2">{item.pname} | {item.category}</p>
                         </div>
 
                         <img width='200px' src={API_URL+'/'+item.pimage} alt="Product" />
-                            <p className="m-2">{item.pname} | {item.category}</p>
                             <h3 className="m-2 text-success">{item.price}</h3>
                             <p className="m-2 text-success">{item.pdesc}</p>
                         </div>
@@ -129,7 +154,10 @@ function MyProducts() {
                             <p className="m-2">{item.pname} | {item.category}</p>
                             <h3 className="m-2 text-success">{item.price}</h3>
                             <p className="m-2 text-success">{item.pdesc}</p>
+
+                            <button onClick={()=>handleDel(item._id)}>DELETE ADD</button>
                         </div>
+                        
                     );
                 })}
             </div>
