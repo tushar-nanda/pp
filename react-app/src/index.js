@@ -20,6 +20,7 @@ import ProductDetail from "./components/ProductDetail";
 import CategoryPage from "./components/CategoryPage";
 import MyProducts from "./components/MyProducts";
 import MyProfile from "./components/MyProfile";
+import EditProducts from "./components/EditProduct";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
   },{
     path: "/my-profile/",
     element: (<MyProfile />),
+  },
+  {
+    path: "/edit-product/:productId",
+    element: (<EditProducts />),
   },
 
 ]);

@@ -13,6 +13,9 @@ function MyProducts() {
     const navigate = useNavigate();
     const [products, setproducts] = useState([]);
     const [cproducts, setcproducts] = useState([]);
+    const [refresh, setrefresh] = useState(false);
+
+    
     // const [rawproducts, setrawproducts] = useState([]);   //tushar
     const [search, setsearch] = useState("")
     // useEffect(()=>{
@@ -37,7 +40,7 @@ function MyProducts() {
                 // console.log(err);
                 alert('server err');
             })
-    } , [])
+    } , [refresh])
     const handlesearch = (value)=>{
         setsearch(value);
     }
@@ -76,39 +79,39 @@ function MyProducts() {
         axios.post(url , data)
             .then((res)=>{
                 if(res.data.message)
-                alert('added to liked');
+                {
+                    alert('added to liked');
+                }
                 
             })
             .catch((err)=>{
                 // console.log(err);
                 alert('server err');
             })
-
-
-
-    }
-    const handleDel = (pid)=>{
-        
-
-        if(!localStorage.getItem('userId'))
-        {
-            alert('please login first');
-            return ;
-        }
-        const url = API_URL + '/delete-product';
-        const data = {
-            pid ,
-            userId: localStorage.getItem('userId'),
-        }
-
-        axios.post(url , data)
-        .then((res)=>{
-            if(res.data.message)
-            alert('Deleted');
             
+            
+            
+        }
+        const handleDel = (pid)=>{
+            if(!localStorage.getItem('userId'))
+            {
+                alert('please login first');
+                return ;
+            }
+            const url = API_URL + '/delete-product';
+            const data = {
+                pid :pid,
+                userId: localStorage.getItem('userId'),
+            }
+            
+            axios.post(url , data)
+            .then((res)=>{
+                if(res.data.message)
+              {  alert('Deleted');
+              setrefresh(!refresh);
+            }
         })
         .catch((err)=>{
-            // console.log(err);
             alert('server err');
         })
     }
@@ -154,6 +157,9 @@ function MyProducts() {
                             <p className="m-2">{item.pname} | {item.category}</p>
                             <h3 className="m-2 text-success">{item.price}</h3>
                             <p className="m-2 text-success">{item.pdesc}</p>
+                            <p className="m-2 text-success">
+                                <Link to={`/edit-product/${item._id}`}> EDIT PRODUCT</Link>
+                            </p>
 
                             <button onClick={()=>handleDel(item._id)}>DELETE ADD</button>
                         </div>

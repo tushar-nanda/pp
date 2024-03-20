@@ -138,3 +138,42 @@ module.exports.myProducts =  (req ,res)=>{
   });
 };
 
+module.exports.deleteProduct=(req,res)=>{
+
+  Products.findOne({ _id: req.body.pid })
+  .then((result)=>{
+    
+    // res.send({message:'yes it is here' , mm:req.body.pid ,ss: result.addedBy});
+    Products.deleteOne({_id : req.body.pid})
+      .then((deleteResult)=>{
+        console.log(deleteResult);
+        res.send({message:'delete ok '});
+      })
+      .catch(()=>{
+        res.send({message:'server Error'});
+      })
+  })
+  .catch(()=>{
+    res.send({message:'server Error'});
+  })
+
+
+  // Products.findOne({ _id: req.body.pid })
+  // .then((result)=>{
+  //   if(result.addedBy == req.body.pid)
+  //   {
+  //     Products.deleteOne({_id : req.body.pid})
+  //     .then((deleteResult)=>{
+  //       console.log(deleteResult);
+  //       res.send({message:'delete ok '});
+  //     })
+  //     .catch(()=>{
+  //       res.send({message:'server Error'});
+  //     })
+  //   }
+  // })
+  // .catch(()=>{
+  //   res.send({message:'server Error'});
+  // })
+}
+
