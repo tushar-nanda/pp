@@ -48,30 +48,29 @@ function EditProducts() {
 
   const handleApi =()=>{
 
-    navigator.geolocation.getCurrentPosition((position)=>{
-      console.log(position.coords.latitude);
-      console.log(position.coords.longitude);
+    // navigator.geolocation.getCurrentPosition((position)=>{
+  ;
       const formData = new FormData();
-      formData.append('plat',position.coords.latitude);
-      formData.append('plong',position.coords.longitude);
+      
+      formData.append('pid',p.productId);
       formData.append('pname',pname);
-      formData.append('pdesc',pdesc);
+      formData.append('pdesc',pdesc); 
       formData.append('price',price);
       formData.append('category',category);
       formData.append('pimage',pimage);
       formData.append('pimage2',pimage2);
       formData.append('userId',localStorage.getItem('userId'));
-      const url = API_URL +  "/add-product";
+      const url = API_URL +  "/edit-product";
       axios.post(url, formData)
       .then((res) => {
         console.log(res.data);
         alert("saved successfully");
-        navigate('/');
+        navigate('/my-products');
           })
       .catch((err) => {
         console.error(err); 
       });
-    })
+    // })
 
 
     

@@ -95,6 +95,71 @@ module.exports.addProduct = (req, res) => {
     return ;
   };
 
+  module.exports.editProduct = (req, res) => {
+    console.log(req.files); 
+    console.log(req.body); 
+  
+    
+      const pid = req.body.pid;
+      const pname = req.body.pname;
+      const pdesc = req.body.pdesc;
+      const price = req.body.price;
+      const category = req.body.category;
+      let pimage='';
+      let pimage2 = '';
+      if(req.files && req.files.pimage &&  req.files.pimage.length > 0 )
+      {
+
+         pimage= req.files.pimage[0].path;
+      }
+      if(req.files && req.files.pimage2 &&  req.files.pimage2.length > 0)
+      {
+         pimage2= req.files.pimage2[0].path;
+      }
+      const addedBy= req.body.userId;
+      // res.send("sadas");
+  
+  
+      
+    // const product = new Products({pname , pdesc , price , category , pimage , pimage2 ,addedBy , pLoc :{
+    //   type : 'Point' , coordinates : [plat,plong]
+    // }
+    // });
+    let editObj = {};
+    if(pname)
+    {
+      editObj.pname = pname ;
+    }
+    if(price)
+    {
+      editObj.price = price ;
+    }
+    if(category)
+    {
+      editObj.category = category ;
+    }
+    if(pimage)
+    {
+      editObj.pimage = pimage ;
+    }
+    if(pimage2)
+    {
+      editObj.pimage2 = pimage2 ;
+    }
+
+
+
+   Products.updateOne({_id:pid } , editObj , {new :true})
+    .then((result) => {
+      res.send({ message: "Saved user", product:result });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send({ message: "Server error" });
+    });
+    return ;
+  };
+
 module.exports.getProducts = (req ,res)=>{
     const catName = req.query.catName; 
     let _f = {};

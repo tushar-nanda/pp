@@ -66,6 +66,7 @@ app.post('/my-products' ,productController.myProducts);
 app.get('/get-user/:uId' ,userController.getUserById);
 
 app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) , productController.addProduct );
+app.post('/edit-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) , productController.editProduct );
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
