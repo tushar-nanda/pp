@@ -11,6 +11,16 @@ const path = require('path');
 
 const productController = require('./controllers/productController');
 const userController = require('./controllers/userController');
+const { Server } = require("socket.io");
+const http = require('http');
+// const { Socket } = require('dgram');
+const httpServer = http.createServer(app);
+
+const io = new Server(httpServer, {
+    cors: {
+      origin:'*'
+    }
+});
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -20,7 +30,7 @@ const storage = multer.diskStorage({
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
     cb(null, file.fieldname + '-' + uniqueSuffix)
   }
-})
+})  
 
 const upload = multer({ storage: storage })
 
@@ -68,6 +78,20 @@ app.get('/get-user/:uId' ,userController.getUserById);
 app.post('/add-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) , productController.addProduct );
 app.post('/edit-product',upload.fields([{name:'pimage'  } , {name:'pimage2'}]) , productController.editProduct );
 
-app.listen(port, () => {
+
+let message = [];
+io.on('connection' , (socket)=>{
+  console.log('scoekt connected ' , socket.id)
+
+  socket.on('sendMsg',(data)=>{
+    message.push(data);
+    io.emit('getMsg' , message)
+  
+  })
+
+  io.emit('getMsg' , message)
+})
+
+httpServer.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

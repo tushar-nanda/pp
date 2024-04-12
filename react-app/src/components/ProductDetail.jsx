@@ -5,11 +5,32 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import Header from './Header';
 import API_URL from '../constants';
+import io from 'socket.io-client';
+let socket;
 function ProductDetail() {
     const [product, setproduct] = useState('');
     const [user, setuser] = useState('')
     const p = useParams();
     console.log(p);
+    const [msg, setmsg] = useState("")
+
+    useEffect(()=>{
+        socket = io(API_URL);
+        
+        socket.on('connect',()=>{
+            console.log('conn');
+        })
+
+        socket.on('getMsg' ,(data)=>{
+            console.log(data,"data");
+        })
+    } , [])
+    
+    const handleSend = ()=>{
+        const data = {username:'userr' , msg}
+        socket.emit('sendMsg' , data)
+    }
+    
     useEffect(()=>{
         const url = API_URL + '/get-product/' + p.productId;
         axios.get(url)
@@ -50,9 +71,7 @@ function ProductDetail() {
                            { product.pimage2 &&  <img width="400px" height='200px' src={API_URL + '/' + product.pimage2} alt="" />}
                             <h6>Products Description</h6>
                             {product.pdesc}
-                        </div>
-                        <div>
-                        {product.pname}
+                            {product.pname}
                         <h3 className='m-2 price-text'>Rs. {product.price} /-</h3>
                         <p className='m-2'>{product.pname} | {product.category}</p>
                         <p className='m-2 text-success'>{product.desc}</p>
@@ -61,6 +80,11 @@ function ProductDetail() {
                         { user && user.username && <h4>{user.username}</h4>}
                         { user && user.email && <h4>{user.email}</h4>}
                         { user && user.mobile && <h4>{user.mobile}</h4>}
+                        </div>
+                        <div>
+                        CHATS
+                        <input value={msg} onChange={(e)=>{setmsg(e.target.value)}}  className='form-control' type="text" />
+                        <button onClick={handleSend} className='btn btn-primary'>SEND</button>
                         </div>
                 </div>
             }
