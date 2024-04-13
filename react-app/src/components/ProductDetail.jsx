@@ -16,27 +16,28 @@ function ProductDetail() {
     const [msgs , setmsgs] = useState([])
 
     useEffect(()=>{
+
         socket = io(API_URL);
         
         socket.on('connect',()=>{
             console.log('conn');
         })
 
+    },[])
+        useEffect(()=>{
+        
         socket.on('getMsg' ,(data)=>{
             console.log(data,"data");
 
-            if(product && product._id)
-            {
-            // const _data = data.filter((item , index )=>{
-            //     return item.productId == product._id;
-            // })
-            setmsgs(data);
-            }
+            const _data = data.filter((item , index )=>{
+                return item.productId == localStorage.getItem('productId');
+            })
+            setmsgs(_data);
         })
-    } , [])
+    } , [msgs, localStorage.getItem('productId') , product])
     
     const handleSend = ()=>{
-        const data = {username:localStorage.getItem('userName') , msg , productId : product._id}
+        const data = {username:localStorage.getItem('userName') , msg , productId : localStorage.getItem('productId')}
         socket.emit('sendMsg' , data)
         setmsg('');
     }
@@ -47,7 +48,10 @@ function ProductDetail() {
             .then((res)=>{
                console.log(res)
                if(res.data.product)
-               setproduct(res.data.product)
+               {
+                setproduct(res.data.product);
+                localStorage.setItem('productId' ,res.data.product._id)
+                }
             })
             .catch((err)=>{
                 // console.log(err);
