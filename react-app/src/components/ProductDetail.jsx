@@ -13,6 +13,7 @@ function ProductDetail() {
     const p = useParams();
     console.log(p);
     const [msg, setmsg] = useState("")
+    const [msgs , setmsgs] = useState([])
 
     useEffect(()=>{
         socket = io(API_URL);
@@ -23,6 +24,8 @@ function ProductDetail() {
 
         socket.on('getMsg' ,(data)=>{
             console.log(data,"data");
+            setmsgs(data);
+            setmsg('');
         })
     } , [])
     
@@ -82,9 +85,26 @@ function ProductDetail() {
                         { user && user.mobile && <h4>{user.mobile}</h4>}
                         </div>
                         <div>
-                        CHATS
-                        <input value={msg} onChange={(e)=>{setmsg(e.target.value)}}  className='form-control' type="text" />
-                        <button onClick={handleSend} className='btn btn-primary'>SEND</button>
+                            CHATS
+                            {
+                                msgs && msgs.length > 0 && 
+                                msgs.map((item , index)=>{
+                                    if(item.username == localStorage.getItem('userName'))
+                                    {
+                                        return (
+                                            <p style={{background :'red' ,  borderRadius:'5px'}}>{item.username} : {item.msg }</p>
+                                        )
+                                    }
+                                    if(item.username != localStorage.getItem('userName'))
+                                    {
+                                        return (
+                                            <p style={{background :'green' , borderRadius:'5px'}}>{item.username} : {item.msg }</p>
+                                        )
+                                    }
+                                })
+                            }
+                            <input value={msg} onChange={(e)=>{setmsg(e.target.value)}}  className='form-control' type="text" />
+                            <button onClick={handleSend} className='btn btn-primary'>SEND</button>
                         </div>
                 </div>
             }

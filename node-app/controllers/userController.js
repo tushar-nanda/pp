@@ -92,7 +92,7 @@ module.exports.login =  (req, res) => {
             data: result
           }, 'MYKEY', { expiresIn: '1h'});
           
-          res.send({ message: "User found with correct password" , token:token , userId:result._id });
+          res.send({ message: "User found with correct password" , token:token , userId:result._id ,username : result.username});
         }
         if(result.password != password) {
           res.send({ message: "User found without password" });
