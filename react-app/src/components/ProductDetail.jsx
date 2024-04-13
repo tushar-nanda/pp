@@ -30,7 +30,7 @@ function ProductDetail() {
     } , [])
     
     const handleSend = ()=>{
-        const data = {username:'userr' , msg}
+        const data = {username:localStorage.getItem('userName') , msg}
         socket.emit('sendMsg' , data)
     }
     
@@ -84,7 +84,7 @@ function ProductDetail() {
                         { user && user.email && <h4>{user.email}</h4>}
                         { user && user.mobile && <h4>{user.mobile}</h4>}
                         </div>
-                        <div>
+                        <div style={{marginRight:'100px' , width:'50vh'}}>
                             CHATS
                             {
                                 msgs && msgs.length > 0 && 
@@ -92,13 +92,13 @@ function ProductDetail() {
                                     if(item.username == localStorage.getItem('userName'))
                                     {
                                         return (
-                                            <p style={{background :'red' ,  borderRadius:'5px'}}>{item.username} : {item.msg }</p>
+                                            <p style={{marginLeft:'100px' ,background :'#61dafb' ,width:'320px',height:'30px',  borderRadius:'5px'}}>{item.username} : {item.msg }</p>
                                         )
                                     }
                                     if(item.username != localStorage.getItem('userName'))
                                     {
                                         return (
-                                            <p style={{background :'green' , borderRadius:'5px'}}>{item.username} : {item.msg }</p>
+                                            <p style={{marginRight:'100px' , background :'#00ff62',width:'320px',height:'30px' , borderRadius:'5px'}}>{item.username} : {item.msg }</p>
                                         )
                                     }
                                 })
