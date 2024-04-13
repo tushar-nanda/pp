@@ -24,14 +24,21 @@ function ProductDetail() {
 
         socket.on('getMsg' ,(data)=>{
             console.log(data,"data");
+
+            if(product && product._id)
+            {
+            // const _data = data.filter((item , index )=>{
+            //     return item.productId == product._id;
+            // })
             setmsgs(data);
-            setmsg('');
+            }
         })
     } , [])
     
     const handleSend = ()=>{
-        const data = {username:localStorage.getItem('userName') , msg}
+        const data = {username:localStorage.getItem('userName') , msg , productId : product._id}
         socket.emit('sendMsg' , data)
+        setmsg('');
     }
     
     useEffect(()=>{
@@ -92,13 +99,13 @@ function ProductDetail() {
                                     if(item.username == localStorage.getItem('userName'))
                                     {
                                         return (
-                                            <p style={{marginLeft:'100px' ,background :'#61dafb' ,width:'320px',height:'30px',  borderRadius:'5px'}}>{item.username} : {item.msg }</p>
+                                            <p key={item._id} style={{marginLeft:'100px' ,background :'#61dafb' ,width:'320px',height:'30px',  borderRadius:'5px'}}>{item.username} : {item.msg }</p>
                                         )
                                     }
                                     if(item.username != localStorage.getItem('userName'))
                                     {
                                         return (
-                                            <p style={{marginRight:'100px' , background :'#00ff62',width:'320px',height:'30px' , borderRadius:'5px'}}>{item.username} : {item.msg }</p>
+                                            <p key={item._id} style={{marginRight:'100px' , background :'#00ff62',width:'320px',height:'30px' , borderRadius:'5px'}}>{item.username} : {item.msg }</p>
                                         )
                                     }
                                 })
