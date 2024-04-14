@@ -32,13 +32,13 @@ function Signup() {
       <h2>welcome to signup page</h2>
       <br />
       UserName
-      <input className="form-control" type="text" value={username} onChange={(e) => { setUsername(e.target.value) }} />
+      <input className="form-control" type="text" value={username} onChange={(e) => { setUsername(e.target.value) }} placeholder="Your Name"  />
       <br />
       Email
-      <input className="form-control" type="text" value={email} onChange={(e) => { setemail(e.target.value) }} />
+      <input className="form-control" type="email" value={email} onChange={(e) => { setemail(e.target.value) }} placeholder="abc@gmail.com" />
       <br />
       Mobile Number
-      <input className="form-control" type="text" value={mobile} onChange={(e) => { setmobile(e.target.value) }} />
+      <input className="form-control" type="mobile" value={mobile} onChange={(e) => { setmobile(e.target.value) } } placeholder="Enter 10-digit mobile number" />
       <br />
       password
       <input className="form-control" type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />

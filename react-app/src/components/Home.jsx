@@ -8,6 +8,7 @@ import Categories from "./Categories";
 import { FaHeart } from "react-icons/fa";
 import './Home.css';
 import API_URL from "../constants";
+import LandingPage from "./LandingPage";
 function Home() {
 
     const navigate = useNavigate();
@@ -174,11 +175,12 @@ function Home() {
     }
     
     return (
-        <div>
+        <div className="home_page_color">
         <Header search={search} handlesearch={handlesearch} handleClick ={handleClick}/>
         <Categories handleCategory={handleCategory}/>
-            welcome to home
-           {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="login-btn">addproduct </button></Link> }
+          
+            <LandingPage />
+          
 
            {issearch && cproducts && cproducts.length==0 && <h5>NO Search results Found</h5>}
            { issearch &&  cproducts && cproducts.length>0 && <h5>Search results

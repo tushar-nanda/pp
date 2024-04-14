@@ -92,8 +92,8 @@ function LikedProducts() {
         <div>
         <Header search={search} handlesearch={handlesearch} handleClick ={handleClick}/>
         <Categories handleCategory={handleCategory}/>
-            welcome to home
-           {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="login-btn">addproduct </button></Link> }
+            {/* welcome to home
+           {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="login-btn">addproduct </button></Link> } */}
 
            {cproducts && cproducts.length>0 ? <h5>Search results</h5>:<span></span>}
            <div className="d-flex justify-content-center flex-wrap">

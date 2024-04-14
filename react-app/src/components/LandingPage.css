@@ -1,0 +1,29 @@
+/* LandingPage.css */
+
+.landing-page {
+    height: 100vh;
+    background-image: url('image.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .title {
+    color: white;
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  /* h1{
+    margin:20px;
+  } */
+  

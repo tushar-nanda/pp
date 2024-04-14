@@ -120,8 +120,8 @@ function MyProducts() {
         <div>
         <Header search={search} handlesearch={handlesearch} handleClick ={handleClick}/>
         <Categories handleCategory={handleCategory}/>
-            welcome to home
-           {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="login-btn">addproduct </button></Link> }
+            {/* welcome to home
+           {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="login-btn">addproduct </button></Link> } */}
 
            
            <div className="d-flex justify-content-center flex-wrap">

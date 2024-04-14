@@ -51,7 +51,7 @@ function Header(props)
             onChange={(e)=>props.handlesearch && props.handlesearch(e.target.value)}
            />
            <button className="search-btn" onClick={()=>props.handleClick && props.handleClick()}><FaSearch /></button>
-           
+            {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="selling-btn">Want to sell Something </button></Link> }
            <br />
            {/* <Link to="/signup">signup</Link> */}
            

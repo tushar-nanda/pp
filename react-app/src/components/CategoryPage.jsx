@@ -167,8 +167,8 @@ function CategoryPage() {
         <div>
         <Header search={search} handlesearch={handlesearch} handleClick ={handleClick}/>
         <Categories handleCategory={handleCategory}/>
-            welcome to home
-           {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="login-btn">addproduct </button></Link> }
+            {/* welcome to home */}
+           {/* {!!localStorage.getItem('token') &&  <Link to="/add-product"><button className="login-btn">addproduct </button></Link> } */}
 
            {issearch && cproducts && cproducts.length==0 && <h5>NO Search results Found 
             <button className="clear-btn" onClick={()=>{setissearch(false)}}>clear search</button></h5>}

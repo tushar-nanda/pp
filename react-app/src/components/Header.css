@@ -1,16 +1,27 @@
 .header
 {
+    
 }
 
 .header-container
 {
     padding: 10px 20px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    background-color: #002f3408;
+    background-color:rgb(208, 227, 244);
     border-bottom: 3px solid #fff;
     
 }
-
+.selling-btn
+{
+    background: #eef1f3;
+    margin-left:180px;
+    border-radius: 10px;
+    font-size: large;
+}
+:hover.selling-btn
+{
+    background: #d3ecef;
+}
 .mt-3
 {
     display: inline-block;
@@ -22,11 +33,12 @@
     margin-left: 80px;
     outline: none;
     padding-left: 10px;
-    width: 250px;
+    width: 600px;
     
     height:44px;
     border:2px solid #002f34;
     border-radius: 4px 0px 0px 4px;
+    background-color: #f0f5f7;
 }
 .search-btn{
     
@@ -66,5 +78,6 @@
     
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     padding: 10px 20px;
+    background-color: aliceblue;
     
 }
