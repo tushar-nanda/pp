@@ -25,16 +25,16 @@ function ProductDetail() {
 
     },[])
         useEffect(()=>{
-        
+        // socket.emit('getMsg' , {})
         socket.on('getMsg' ,(data)=>{
             console.log(data,"data");
 
             const _data = data.filter((item , index )=>{
-                return item.productId == localStorage.getItem('productId');
+                return item.productId == p.productId;
             })
             setmsgs(_data);
         })
-    } , [msgs, localStorage.getItem('productId') , product])
+    } , [p.productId])
     
     const handleSend = ()=>{
         const data = {username:localStorage.getItem('userName') , msg , productId : localStorage.getItem('productId')}
