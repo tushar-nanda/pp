@@ -81,3 +81,10 @@
     background-color: aliceblue;
     
 }
+.userId
+{
+    width: 100%;
+    color: black;
+    background: #8fcdf6;
+    border: 1px solid rgb(61, 171, 165);
+}

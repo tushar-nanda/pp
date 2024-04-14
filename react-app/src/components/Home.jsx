@@ -166,6 +166,8 @@ function Home() {
                 // console.log(err);
                 alert('server err');
             })
+
+        // navigate('/');
     }
 
 

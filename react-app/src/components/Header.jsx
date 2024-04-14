@@ -96,7 +96,12 @@ function Header(props)
               borderRadius:'7px'
              
            }}>
+                <div>
+                 
+                 {!!localStorage.getItem('token') &&  <Link ><button className="logout-btn userId" >userID : {localStorage.getItem('userName')} </button></Link> }
+                 </div>
                  <div>
+
                  {!!localStorage.getItem('token') &&  <Link to="/liked-products"><button className="logout-btn">Favourites </button></Link> }
                  </div>
 

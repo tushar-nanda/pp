@@ -83,9 +83,6 @@ function LikedProducts() {
                 // console.log(err);
                 alert('server err');
             })
-
-
-
     }
     
     return (

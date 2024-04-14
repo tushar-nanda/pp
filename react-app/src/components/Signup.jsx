@@ -18,7 +18,7 @@ function Signup() {
       .then((res) => {
         console.log(res);
         alert('successfully registered');
-        // navigate('/login');  
+        navigate('/login');  
       })
       .catch((err) => {
         console.log(err);
