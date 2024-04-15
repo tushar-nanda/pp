@@ -3,7 +3,7 @@ import Header from './Header';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';  
 import API_URL from '../constants';
-
+import './login.css'
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -26,27 +26,37 @@ function Signup() {
   };
 
   return (
-    <div>
+    <>   
+     <div>
       <Header />
-      <div className='p-3 m-3'>
-      <h2>welcome to signup page</h2>
-      <br />
-      UserName
-      <input className="form-control" type="text" value={username} onChange={(e) => { setUsername(e.target.value) }} placeholder="Your Name"  />
-      <br />
-      Email
-      <input className="form-control" type="email" value={email} onChange={(e) => { setemail(e.target.value) }} placeholder="abc@gmail.com" />
-      <br />
-      Mobile Number
-      <input className="form-control" type="mobile" value={mobile} onChange={(e) => { setmobile(e.target.value) } } placeholder="Enter 10-digit mobile number" />
-      <br />
-      password
-      <input className="form-control" type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
-      <br />
-      <button className='btn btn-primary ml-3' onClick={handleApi}>signup</button>
-      <Link className='btn btn-success m-4' to="/login">Go to Login Page</Link>
-      </div>
+      <div className="login-page">
+          <div className='adjust'>
+            <h1 style={{textAlign:"center"}}>SignUp</h1>
+            <div className="form">
+               
+                    <input type="text"value={username} onChange={(e) => { setUsername(e.target.value) }}placeholder='username' />
+                    
+                    <input className="form-control" type="email" value={email} onChange={(e) => { setemail(e.target.value) }} placeholder="abc@gmail.com" />
+                    
+                    <input className="form-control" type="mobile" value={mobile} onChange={(e) => { setmobile(e.target.value) } } placeholder="Enter 10-digit mobile number" />
+                    
+                    <input className="form-control" type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} placeholder='password' />
+
+                    <button  onClick={handleApi}>Register</button>
+                    <p className='message'>Already Registered? <Link to="/login">Go to Login Page</Link></p>
+                
+            </div>
+            </div>
+        </div>
+
+
+
+
     </div>
+
+   
+    </>
+
   );
 }
 
