@@ -96,6 +96,7 @@ function ProductDetail() {
                         { user && user.mobile && <h4>{user.mobile}</h4>}
                         </div>
                         <div style={{marginRight:'100px' , width:'50vh'}}>
+                   { !localStorage.getItem('userId')?<div>kindly login to use Chat feature</div>:<div>
                             CHATS
                             {
                                 msgs && msgs.length > 0 && 
@@ -114,6 +115,11 @@ function ProductDetail() {
                                     }
                                 })
                             }
+
+                    </div>}
+                    
+
+                            
                             <input value={msg} onChange={(e)=>{setmsg(e.target.value)}}  className='form-control' type="text" />
                             <button onClick={handleSend} className='btn btn-primary'>SEND</button>
                         </div>
