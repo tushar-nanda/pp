@@ -50,12 +50,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // .then(() => console.log('MongoDB connected'))
 // .catch(err => console.log('MongoDB connection error:', err));
 
-mongoose.connect(process.env.MONGOURL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGOURL)
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log('MongoDB connection error:', err));
+
+// const connectDB = async () => {
+//   try {
+//     const conn = await mongoose.connect(process.env.MONGOURL);
+//     console.log('MongoDB connected');
+//   } catch(err){
+//     console.log('MongoDB connection error:', err)
+//   }
+// }
 
 
 
