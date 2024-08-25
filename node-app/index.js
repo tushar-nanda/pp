@@ -8,9 +8,10 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const multer  = require('multer');
 const path = require('path');
-
+require('dotenv').config();
 const productController = require('./controllers/productController');
 const userController = require('./controllers/userController');
+
 const { Server } = require("socket.io");
 const http = require('http');
 // const { Socket } = require('dgram');
@@ -21,6 +22,9 @@ const io = new Server(httpServer, {
       origin:'*'
     }
 });
+
+app.use(express.static('images'));
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,7 +43,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-mongoose.connect('mongodb://127.0.0.1:27017/test', {
+// mongoose.connect('mongodb://127.0.0.1:27017/test', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// })
+// .then(() => console.log('MongoDB connected'))
+// .catch(err => console.log('MongoDB connection error:', err));
+
+mongoose.connect(process.env.MONGOURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

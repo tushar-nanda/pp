@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema({
-    pname:String ,
-    pdesc: String ,
-    price : String ,
-     category : String ,
+      pname:String ,
+      pdesc: String ,
+      price : String ,
+      category : String ,
       pimage : String,
       pimage2 : String,
       addedBy: mongoose.Schema.Types.ObjectId,
